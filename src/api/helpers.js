@@ -1,7 +1,7 @@
 import axios from 'axios'
-const ERRNO_OK = '0'
+const ERRNO_OK = 0
 
-function get(url) {
+function get (url) {
   return function (paramas) {
     return axios.get(url, {
       paramas
