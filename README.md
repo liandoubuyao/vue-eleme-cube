@@ -33,4 +33,4 @@ npm run lint
 ### Customize configuration
 
 See [Configuration Reference](https://cli.vuejs.org/config/).
-vue 试炼 level0
+vue 试炼 level0.1
