@@ -1,4 +1,5 @@
 # vue-eleme-cube
+<<<<<<< HEAD
 
 ## Project setup
 ```
@@ -27,3 +28,6 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+=======
+vue试炼 level0
+>>>>>>> fefd938a3cb9d67ed0c0bb6dc2132d3a97e03864
