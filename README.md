@@ -34,3 +34,5 @@ npm run lint
 
 See [Configuration Reference](https://cli.vuejs.org/config/).
 vue 试炼 level0
+vscode settings
+2d48f81ef5da8764615a40276371da6c
