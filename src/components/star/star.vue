@@ -25,12 +25,6 @@ export default {
       }
     }
   },
-  components: {},
-  data () {
-    return {
-      // starsClass: []
-    }
-  },
   computed: {
     sizeClass: function () {
       return 'star' + '_' + this.size
