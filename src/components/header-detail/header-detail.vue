@@ -1,7 +1,6 @@
 <!-- 头部蒙版 -->
 <template>
-  <transition name="fade"
-              :duration="10000">
+  <transition name="fade">
     <div class='header-detail'
          v-show="visible">
       <div class="info">
