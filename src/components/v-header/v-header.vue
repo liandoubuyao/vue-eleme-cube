@@ -1,6 +1,7 @@
 <!--  -->
 <template>
-  <div class='v-header'>
+  <div class='v-header'
+       @click="showDetail">
     <div class="bg"
          :style="{backgroundImage:'url('+seller.avatar+')'}"></div>
     <div class="info">
@@ -59,6 +60,16 @@ export default {
     // 这里存放数据
     return {
 
+    }
+  },
+  methods: {
+    showDetail () {
+      this.HeaderDetailComp = this.HeaderDetailComp || this.$createHeaderDetail({
+        $props: {
+          seller: 'seller'
+        }
+      })
+      this.HeaderDetailComp.show()
     }
   }
 }
