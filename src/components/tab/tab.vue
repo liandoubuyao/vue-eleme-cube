@@ -18,6 +18,7 @@
       <cube-slide-item v-for="(item,index) in tabs"
                        :key="index">
         <component :is="item.component"
+                   ref="component"
                    :data="item.data"></component>
       </cube-slide-item>
     </cube-slide>
@@ -62,9 +63,14 @@ export default {
       }
     }
   },
+  mounted () {
+    this.onChange(this.infinatialIndex)
+  },
   methods: {
     onChange (index) {
       this.index = index
+      const component = this.$refs.component[index]
+      component.fetch && component.fetch()
     },
     slideScroll ({ x, y }) {
       const tabBarWidth = this.$refs.tabbar.$el.clientWidth
