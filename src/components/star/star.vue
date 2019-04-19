@@ -7,9 +7,7 @@
           :class="item"></span>
   </span>
 </template>
-
 <script>
-
 export default {
   props: {
     score: {
@@ -46,14 +44,6 @@ export default {
       }
       return starsClass
     }
-  },
-  methods: {
-
-  },
-  created () {
-  },
-  mounted () {
-
   }
 }
 </script>

@@ -26,11 +26,13 @@
         </cube-scroll-nav-panel>
       </cube-scroll-nav>
     </div>
+    <shopCart></shopCart>
   </div>
 </template>
 
 <script>
 import { getGoods } from 'api/index'
+import shopCart from 'components/shop-cart/shop-cart'
 export default {
   props: {
     data: {
@@ -41,7 +43,9 @@ export default {
     }
   },
   name: 'goods',
-  components: {},
+  components: {
+    shopCart
+  },
   data () {
     return {
       goods: []
@@ -67,17 +71,16 @@ export default {
 .goods
   position relative
   height 100%
-  overflow hidden
-  bottom 64px
+  bottom 45px
   .scroll-nav-wrapper
     position relative
     height 100%
     overflow hidden
-    margin-top 64px
+    margin-top 45px
   >>>.cube-scroll-nav-bar-items
-    padding-bottom 64px
+    padding-bottom 45px
   >>>.cube-scroll-nav-panels
-    padding-bottom 64px
+    padding-bottom 45px
   >>>.cube-scroll-nav-bar
     width 80px
     .cube-scroll-nav-bar-items
