@@ -2,19 +2,21 @@
 <template>
   <div class='shop-cart'>
     <div class="cart-wrapper">
-      <div class="shop-icon light">
+      <div class="shop-icon"
+           :class="cartClass">
         <div class="icon-wrapper">
           <div class="cart-wrapper">
             <i class="icon-shopping_cart"></i>
-            <div class="point">3</div>
+            <div class="point">{{totalCount}}</div>
           </div>
         </div>
       </div>
       <div class="info">
-        <span class="price">￥35</span>
-        <span class="shipping-fee">另需配送费￥4元</span>
+        <span class="price">￥{{totalPrice}}</span>
+        <span class="shipping-fee">另需配送费￥{{deliveryPrice}}元</span>
       </div>
-      <div class="btn light">去结算</div>
+      <div class="btn"
+           :class="btnClass">{{btnInfo}}</div>
     </div>
   </div>
 </template>
@@ -23,9 +25,73 @@
 
 export default {
   name: 'shop-cart',
+  props: {
+    selectFoods: {
+      type: Array,
+      default () {
+        return []
+      }
+    },
+    deliveryPrice: {
+      type: Number,
+      default () {
+        return 0
+      }
+    },
+    minPrice: {
+      type: Number,
+      default () {
+        return 0
+      }
+    }
+  },
   data () {
     return {
-
+    }
+  },
+  computed: {
+    totalPrice () {
+      let total = 0
+      for (let i = 0; i < this.selectFoods.length; i++) {
+        total += this.selectFoods[i].price * this.selectFoods[i].count
+      }
+      return total
+    },
+    totalCount () {
+      let totalCount = 0
+      for (let i = 0; i < this.selectFoods.length; i++) {
+        totalCount += this.selectFoods[i].count
+      }
+      return totalCount
+    },
+    cartClass () {
+      let cartClass
+      if (this.totalCount < 1) {
+        cartClass = ''
+      } else {
+        cartClass = 'light'
+      }
+      return cartClass
+    },
+    btnInfo () {
+      let btnInfo
+      if (this.totalPrice === 0) {
+        btnInfo = `￥${this.minPrice}元起送`
+      } else if (this.totalPrice > 0 && this.totalPrice < this.minPrice) {
+        btnInfo = `还差￥${this.minPrice - this.totalPrice}元起送`
+      } else {
+        btnInfo = `去结算`
+      }
+      return btnInfo
+    },
+    btnClass () {
+      let btnClass
+      if (!this.totalCount || this.totalPrice < this.minPrice) {
+        btnClass = ''
+      } else {
+        btnClass = 'light'
+      }
+      return btnClass
     }
   },
   methods: {
