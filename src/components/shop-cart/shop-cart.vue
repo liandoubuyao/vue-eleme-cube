@@ -18,12 +18,36 @@
       <div class="btn"
            :class="btnClass">{{btnInfo}}</div>
     </div>
+    <div class="cart-balls">
+      <div v-for="(item ,index) in balls" :key="index">
+        <transition
+          @before-enter="beforeDrop"
+          @enter="dropping"
+          @after-enter="afterDrop"
+        >
+          <div class="ball" v-show="item.show">
+            <div class="inner"></div>
+          </div>
+        </transition>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+const BALL_NUM = 10
+function createBalls () {
+  let ret = []
+  for (let i = 0; i < BALL_NUM; i++) {
+    ret.push({
+      show: false
+    })
+  }
+  return ret
+}
 
 export default {
+
   name: 'shop-cart',
   props: {
     selectFoods: {
@@ -47,6 +71,7 @@ export default {
   },
   data () {
     return {
+      balls: createBalls()
     }
   },
   computed: {
@@ -95,13 +120,44 @@ export default {
     }
   },
   methods: {
-
+    drop (el) {
+      for (let i = 0; i < this.balls.length; i++) {
+        const ball = this.balls[i]
+        if (!ball.show) {
+          ball.el = el
+          ball.show = true
+          el.style.display = ''
+          this.dropBalls.push(ball)
+          return
+        }
+      }
+    },
+    beforeDrop (el) {
+      const ball = this.dropBalls[this.dropBalls.length - 1]
+      const rect = ball.el.getBoundingClientRect()
+      const x = rect.left - window.innerWidth / 10
+      const y = -(window.innerHeight - rect.top - 23)
+      el.style.transform = el.style.webkitTransform = `translate3d(0,${y}px,0)`
+      const inner = el.getElementsByClassName('inner')[0]
+      inner.style.transform = inner.style.webkitTransform = `translate3d(${x}px,0,0)`
+    },
+    dropping (el, done) {
+      this._reflow = document.body.offsetHeight
+      el.style.transform = el.style.webkitTransform = `translate3d(0,0,0)`
+      const inner = el.getElementsByClassName('inner')[0]
+      inner.style.transform = inner.style.webkitTransform = `translate3d(0,0,0)`
+      el.addEventListener('transitionend', done)
+    },
+    afterDrop (el) {
+      let ball = this.dropBalls.shift()
+      ball.show = false
+      if (ball) {
+        el.style.display = 'none'
+      }
+    }
   },
   created () {
-
-  },
-  mounted () {
-
+    this.dropBalls = []
   }
 }
 </script>
@@ -184,4 +240,19 @@ export default {
         color #ffffff
         font-weight bold
         background-color $color-green
+  .cart-balls
+    .ball
+      position fixed
+      z-index 999999
+      bottom 23px
+      left 10vw
+      margin-left -6px
+      transition all 0.4s cubic-bezier(0,-0.14,.91,-0.35)
+      .inner
+        width 12px
+        height 12px
+        border-radius 6px
+        background-color $color-blue
+        transition all 0.4s linear
+
 </style>

@@ -22,7 +22,7 @@
                   <div class="price">￥{{food.price}}</div>
                 </div>
                 <div class="addbtn">
-                  <cartControl :food="food"></cartControl>
+                  <cartControl :food="food" @ballsMove="ballsMove"></cartControl>
                 </div>
               </div>
             </li>
@@ -32,7 +32,8 @@
     </div>
     <shopCart :deliveryPrice="seller.deliveryPrice"
               :minPrice="seller.minPrice"
-              :selectFoods="selectFoods"></shopCart>
+              :selectFoods="selectFoods"
+              ref="shopCart"></shopCart>
   </div>
 </template>
 
@@ -86,6 +87,9 @@ export default {
           this.goods = goods
         })
       }
+    },
+    ballsMove (el) {
+      this.$refs.shopCart.drop(el)
     }
 
   }
